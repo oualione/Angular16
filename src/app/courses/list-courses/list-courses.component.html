@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="row my-4">
+        <div class="col-md-6">
+            <h1 class="text-center">CONTACTS LIST</h1>
+        </div>
+        <div class="col-md-6 text-end">
+            <button class="btn btn-success" (click)="toggleForm()">ADD</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <form *ngIf="showForm">
+                <!-- Form Group for the Name Field -->
+                <div class="mb-3 form-group">
+                    <label for="name" class="form-label">Name:</label>
+                    <input type="text" [(ngModel)]="myCourse.name" class="form-control" id="name" name="name">
+                </div>
+
+                <!-- Form Group for the Email Field -->
+                <div class="mb-3 form-group">
+                    <label for="price" class="form-label">Price:</label>
+                    <input type="number" [(ngModel)]="myCourse.price" class="form-control" id="price" name="price">
+                </div>
+
+
+                <!-- Submit Button -->
+                <div class="d-grid">
+                    <button type="submit" *ngIf="!editForm" (click)="addCourse()" class="btn btn-primary">Add Course</button>
+                    <button type="submit" *ngIf="editForm" (click)="updateCourse()" class="btn btn-warning">Edit Course</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <ng-container *ngIf="courses.length; then list else alert"></ng-container>
+
+    <ng-template #list>
+        <div class="row my-3">
+            <div class="col-md-12">
+                <ol class="list-group list-group-numbered" *ngIf="courses.length">
+                    <li *ngFor="let course of courses" (dblclick)="deleteCourse(course)" class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div (click)="editCourse(course)" class="fw-bold">{{course.name}}</div>
+                        </div>
+                        <span class="badge bg-primary rounded-pill">{{course.price}}</span>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #alert>
+        <div class="my-3 alert alert-danger" role="alert">
+            <strong>No Courses Found !</strong>
+        </div>
+    </ng-template>
+</div>
